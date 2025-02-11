@@ -9,8 +9,8 @@ export async function POST(request: Request) {
     const formData = await request.json()
     
     const msg = {
-      to: process.env.RECIPIENT_EMAIL!,
-      from: process.env.VERIFIED_SENDER_EMAIL!, // Must be verified with SendGrid
+      to: process.env.GMAIL_USER,
+      from: process.env.GMAIL_PASSWORD, // Must be verified with SendGrid
       subject: `New Lab Test Booking - ${formData.name}`,
       html: `
         <h1>New Lab Test Booking</h1>
