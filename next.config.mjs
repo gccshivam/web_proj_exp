@@ -21,10 +21,10 @@ const nextConfig = {
     parallelServerBuildTraces: true,
     parallelServerCompiles: true,
   },
-  env: {
-    GMAIL_USER: process.env.GMAIL_USER,
-    GMAIL_PASSWORD: process.env.GMAIL_PASSWORD,
-  },
+  // env: {
+  //   GMAIL_USER: process.env.GMAIL_USER,
+  //   GMAIL_PASSWORD: process.env.GMAIL_PASSWORD,
+  // },
 }
 
 mergeConfig(nextConfig, userConfig)
