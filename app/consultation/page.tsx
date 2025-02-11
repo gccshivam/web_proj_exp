@@ -94,7 +94,6 @@ export default function LabTestBooking() {
   const formRef = useRef<HTMLFormElement>(null)
   const iconsRef = useRef<HTMLDivElement>(null)
   const cardRef = useRef<HTMLDivElement>(null)
-
   useEffect(() => {
     // Floating medical icons animation
     const icons = gsap.utils.toArray(".medical-icon")
@@ -187,13 +186,47 @@ export default function LabTestBooking() {
     }))
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     if (step === 3) {
-      setShowConfirmation(true)
+      try {
+        const response = await fetch('/api/send-email', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(formData),
+        })
+
+        if (!response.ok) {
+          throw new Error('Failed to submit form')
+        }
+
+        setShowConfirmation(true)
+        // Reset form after successful submission
+        setFormData({
+          name: "",
+          age: "",
+          bloodGroup: "",
+          sex: "",
+          mobile: "",
+          address: "",
+          landmark: "",
+          date: "",
+          time: "",
+          alternativeTime: "",
+          healthIssues: "",
+          medications: "",
+          allergies: "",
+          selectedTests: [],
+        })
+        setStep(1)
+      } catch (error) {
+        console.error('Submission error:', error)
+        alert('Failed to submit form. Please try again.')
+      }
     }
   }
-
   const handleNext = (e: React.MouseEvent) => {
     e.preventDefault()
     if (isStepValid()) {
@@ -550,4 +583,3 @@ export default function LabTestBooking() {
     </div>
   )
 }
-
